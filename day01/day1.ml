@@ -38,6 +38,6 @@ let main () =
     print_newline ();
     print_int (sum (values (letter_numbers lines)));
     print_newline ();
-  end;;
+  end
 
-main ()
+let () = main ()
