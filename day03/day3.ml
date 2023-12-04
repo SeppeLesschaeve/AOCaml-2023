@@ -12,17 +12,13 @@ let fold_grid s1 s2 = { numbers = List.append s1.numbers s2.numbers; symbols = L
 
 let adj symbol number = number.xmin - 1 <= symbol.x && symbol.x <= number.xmax + 1 && abs (number.y - symbol.y) <= 1
 
-let rec of_char_list : char list -> string = function 
-  | [] -> ""
-  | c :: cs -> (String.make 1 c) ^ of_char_list cs
+let rec of_char_list : char list -> string = fun charList -> List.fold_right (fun c -> fun cs -> (String.make 1 c) ^ (cs)) charList ""
 
 let rec to_chars : string -> (char list) = function 
   | "" -> []
   | ch -> (String.get ch 0) :: to_chars (String.sub ch 1 (String.length ch - 1))
 
-let rec to_char_list : string list -> (char list) list = function 
-  | [] -> []
-  | str :: strs -> (to_chars str) :: to_char_list strs
+let rec to_char_list : string list -> (char list) list = List.map to_chars
 
 let parse (input: string list) : grid =
   let rec aux input num xmax y numbers symbols =
